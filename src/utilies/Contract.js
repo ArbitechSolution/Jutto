@@ -939,7 +939,7 @@ export const juttoTokenAbi = [
 ];
 
 export const financeAppContractAddress =
-  "0x49354e86f2c17E3f475cfF466f2113ad26F21470";
+  "0x94EF4744dcb21f978c12225a0dAB034ED30159F6";
 
 export const financeAppContract_Abi = [
 	{
@@ -1206,25 +1206,6 @@ export const financeAppContract_Abi = [
 		"inputs": [
 			{
 				"internalType": "uint256",
-				"name": "pacakage",
-				"type": "uint256"
-			}
-		],
-		"name": "_calculateDepositReward",
-		"outputs": [
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "uint256",
 				"name": "",
 				"type": "uint256"
 			}
@@ -1282,19 +1263,6 @@ export const financeAppContract_Abi = [
 	{
 		"inputs": [],
 		"name": "checkRankViceCaptainLength",
-		"outputs": [
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [],
-		"name": "countDay",
 		"outputs": [
 			{
 				"internalType": "uint256",
