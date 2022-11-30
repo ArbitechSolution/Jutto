@@ -85,7 +85,7 @@ function My_team() {
             <div className="sale_main">
               <img src={img1} alt="" />
               <div className="team_p text-white ">
-                <span>Sales</span>&nbsp;&nbsp;&nbsp;&nbsp;
+                <span>Sales :</span>&nbsp;&nbsp;&nbsp;&nbsp;
                 <span>{userinfos.sale}</span>
               </div>
             </div>

@@ -12,7 +12,7 @@ import { useSelector } from "react-redux";
 // import Moment from 'react-moment';
 import moment from 'moment';
 import { ColorRing } from 'react-loader-spinner'
-const web3Supply = new Web3("https://matic-mumbai.chainstacklabs.com")
+const web3Supply = new Web3("https://bsc-dataseed1.binance.org/")
 function Latest_Deposit() {
 
 	const [orderInfos, setOrderInfo] = useState('')

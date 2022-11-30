@@ -1,7 +1,7 @@
 import { ActionTypes } from "../types";
 import { financeAppContractAddress, financeAppContract_Abi } from "../../utilies/Contract";
 import Web3 from "web3";
-const web3Supply = new Web3("https://matic-mumbai.chainstacklabs.com")
+const web3Supply = new Web3("https://bsc-dataseed1.binance.org/")
 export const getpoolDetail = () => {
     return async (dispatch) => {
       try {

@@ -51,11 +51,9 @@ function Stack_level() {
                 setUserIncome(userincome)
                 let balance = new web3.eth.getBalance(acc).then((response) => {
                     let userBalance = web3.utils.fromWei(response)
-                    // console.log('what is balance', userBalance)
 
                     userBalance = Number(userBalance).toFixed(2)
                     setUserAccountBalance(userBalance)
-                    // console.log('what is balance', userBalance)
                 })
                 setrefrealAdress(userinfo.referrer)
             }
@@ -104,11 +102,11 @@ function Stack_level() {
 
                             </div> */}
                             <div className="d-flex S_sss">
-                                <p className='s_l_p'>Income</p>
+                                <p className='s_l_p'>Income:</p>
                                 <p className=' aliment'>{Number(userIncome).toFixed(2)}</p>
                             </div>
                             <div className="d-flex S_sss">
-                                <p className='s_l_p'>BNB Balance</p>
+                                <p className='s_l_p'>BNB Balance:</p>
                                 <p className=' aliment'>{userAccountbalance}</p>
                             </div>
                             <div className="d-flex S_sss">

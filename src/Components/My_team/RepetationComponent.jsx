@@ -14,12 +14,11 @@ import { useSelector, useDispatch } from "react-redux";
 import {getRemaintime} from '../../Redux/remaintime/action'
 import Countdown from 'react-countdown';
 import Web3 from "web3";
-const web3Supply = new Web3("https://matic-mumbai.chainstacklabs.com")
+const web3Supply = new Web3("https://bsc-dataseed1.binance.org/")
 const RepetationComponent = () => {
   let acc = useSelector((state) => state.connect?.connection);
   let {remaintime} = useSelector((state)=>state.remaintime);
    const [depositTime, setdepositTime] = useState("");
-  const [day, setDays] = useState("");
   const Completionist = () => <div className="d-flex stact_inner">
   <div className="div">
     <BsFillStopwatchFill className='icon_color fs-3'></BsFillStopwatchFill>
@@ -52,8 +51,6 @@ const RepetationComponent = () => {
       );
       let depostTime = await financeAppcontractOf.methods.getCurDay().call();
       setdepositTime(depostTime)
-      // let day = await financeAppcontractOf.methods.dayPerCycle().call();
-      // setDays(day);
     } catch (e) {
       console.log(e.message);
     }
@@ -117,7 +114,7 @@ const dispatch = useDispatch()
               <div className="div">
                 <GiCycle className='icon_color fs-3'></GiCycle>
               </div>
-              <div><p className='stack_p'>Income: {day} days per cycle.
+              <div><p className='stack_p'>Income: 7 days per cycle.
               </p></div>
             </div>
               <Countdown date={Date.now() + (((parseInt(remaintime)  * 1000))-Date.now()) } renderer={renderer} />

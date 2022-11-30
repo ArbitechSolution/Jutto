@@ -11,7 +11,7 @@ import Web3 from 'web3'
 import { toast } from 'react-toastify';
 import ReactLoading from 'react-loading';
 import {useSelector} from 'react-redux'
-const web3Supply = new Web3("https://matic-mumbai.chainstacklabs.com")
+const web3Supply = new Web3("https://bsc-dataseed1.binance.org/")
 function Register(props, getAccount) {
     let acc = useSelector((state) => state.connect?.connection);
     let [accadress, setaccadress] = useState('')
@@ -48,17 +48,23 @@ function Register(props, getAccount) {
                 const web3 = window.web3;
                 const contract =new web3.eth.Contract(financeAppContract_Abi, financeAppContractAddress);
                 const refAddress = await contract.methods.defaultRefer().call();
-                if(refAddress == regisdterAdress){
-                    registerAddress();
-                }else{
-                    const {maxDeposit} = await contract.methods.userInfo(regisdterAdress).call();
-                    if(maxDeposit > 0){
+                const {referrer} = await contract.methods.userInfo(acc).call();
+                if(referrer == "0x0000000000000000000000000000000000000000"){
+                    if(refAddress == regisdterAdress){
                         registerAddress();
                     }else{
-                        toast.error("Invalid referral");
-                        toast.info("Click on referral and use default referral")
-                    }            
-                 }
+                        const {maxDeposit} = await contract.methods.userInfo(regisdterAdress).call();
+                        console.log("maxDeposit", maxDeposit);
+                        if(maxDeposit > 0){
+                            registerAddress();
+                        }else{
+                            toast.error("Invalid referral");
+                            toast.info("Click on referral and use default referral")
+                        }            
+                     }
+                }else {
+                    toast.error("You have already registerd");
+                }
               }
         } catch (error) {
             console.error("error while new register", error.message);
@@ -66,48 +72,6 @@ function Register(props, getAccount) {
     }
 
 
-    const ReferralAddress = async () => {
-
-        try {
-
-            let URL = window.location.href;
-
-
-            if (URL.includes("referrallink")) {
-                // setcheckreffarl(true)
-                let pathArray = URL.split('?');
-
-                let UserID = pathArray[pathArray.length - 1]
-                UserID = UserID.split('=')
-                UserID = UserID[UserID.length - 1]
-                // console.log("LAST", UserID);
-
-                setRegisdterAdress(UserID)
-
-
-            } else {
-
-            }
-
-
-
-        } catch (e) {
-            console.log("Erroe Whille Referral Fuction Call", e);
-        }
-    }
-    const getReferral = async () => {
-        try {
-            const contract = new web3Supply.eth.Contract(financeAppContract_Abi, financeAppContractAddress);
-            const address = await contract.methods.defaultRefer().call();
-            setRegisdterAdress(address)
-        } catch (error) {
-            console.error("error while get Refferral", error.message);
-        }
-    }
-    useEffect(() => {
-        getReferral()
-        // ReferralAddress()
-    }, []);
 
 
 
@@ -138,8 +102,7 @@ function Register(props, getAccount) {
                         <div className="row">
                             <div className="col-lg-8">
                                 <input type="text" placeholder='Enter Address' value={regisdterAdress} onChange={(e) => { setRegisdterAdress(e.target.value) }} className='input_modal' />
-                                {/* <Button className='mt-2 ' onClick={getReferral} style={{ backgroundColor: "#ffbf00", border: "1px solid #ffbf00" , color:"#000"}}>Use admin address as referral<RiRefreshFill/></Button> */}
-                                {/* <input type="text" placeholder='Enter amount in BSG' value={amount} onChange={(e) => { setAmount(e.target.value) }} className='input_modal mt-3' /> */}
+                                {/* <Button className='mt-2 ' onClick={getReferral} style={{ backgroundColor: "#ffbf00", border: "1px solid #ffbf00" , color:"#000"}}>Default Referral<RiRefreshFill/></Button>  */}
 
                             </div>
 

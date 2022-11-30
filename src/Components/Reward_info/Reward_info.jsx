@@ -7,12 +7,13 @@ import RepetationComponent from '../My_team/RepetationComponent';
 import './Reward_info.css'
 import {useSelector} from 'react-redux'
 import Web3 from 'web3';
-const web3Supply = new Web3("https://matic-mumbai.chainstacklabs.com")
+const web3Supply = new Web3("https://bsc-dataseed1.binance.org/")
 function Reward_info() {
 
 	let acc = useSelector((state) => state.connect?.connection);
 	const [reward, setReward] = useState("")
-	const [dayTopUsers, setDayTopUsers] = useState([])
+	const [dayTopUsers, setDayTopUsers] = useState([]);
+	const [dailyPools, setDailyPools] = useState(0)
 	const getDetail = async () => {
 			try {
 				if (acc == "No Wallet") {
@@ -51,12 +52,19 @@ function Reward_info() {
 		try {
 			let financeAppcontractOf = new web3Supply.eth.Contract(financeAppContract_Abi, financeAppContractAddress);
 			let getCurDays = await financeAppcontractOf.methods.getCurDay().call();
-				let arr = []
-				for (let index = 0; index < 3; index++) {
-					let topUser = await financeAppcontractOf.methods.dayTopUsers(getCurDays, index).call();
-					arr.push(topUser)
-				}
-				setDayTopUsers(arr)
+			let dailyPool = await financeAppcontractOf.methods.dailyPool().call();
+			if(dailyPool > 0){
+				dailyPool = (dailyPool * 0.6) / 100;
+				let poolArr = [((dailyPool * 50) / 100), ((dailyPool * 30) / 100), ((dailyPool * 20) / 100)]
+				setDailyPools(dailyPool)
+					let arr = []
+					
+					for (let index = 0; index < 3; index++) {
+						let topUser = await financeAppcontractOf.methods.dayTopUsers(getCurDays, index).call();
+						arr.push({reward:poolArr[index],topUser})
+					}
+					setDayTopUsers(arr)
+			}
 		} catch (error) {
 			console.error("error while get top user", error);
 		}
@@ -83,7 +91,7 @@ function Reward_info() {
 			<div className="main_deposit mb-3">
 				<div className="second_deposit">
 					<div className="fi_line">
-						<p>Top 5 Players</p>
+						<p>Top 3 Players</p>
 						{
 							dayTopUsers.length===0?(
 								<p>...0 Player</p>
@@ -97,7 +105,7 @@ function Reward_info() {
 						return (
 							item != "0x0000000000000000000000000000000000000000" &&
 							(<div className="pehli_line" key={index}>
-								<div className="nill">{index + 1} <span className='ms-2 me-2'>|</span><span className='spn'> {item}</span></div>
+								<div className="nill">{index + 1} <span className='ms-2 me-2'>|</span><span className='spn'> {item.topUser}</span> &nbsp;&nbsp; <span className='spn'>{item.reward}</span></div>
 								<div className='group_img'><BsArrowUpRight></BsArrowUpRight></div>
 							</div>)
 						)
