@@ -71,8 +71,29 @@ function Register(props, getAccount) {
         }
     }
 
+    const ReferralAddress = async () => {
+        try {
+            let URL = window.location.href;
+            if (URL.includes("referrallink")) {
+                // setcheckreffarl(true)
+                let pathArray = URL.split('?');
 
+                let UserID = pathArray[pathArray.length - 1]
+                UserID = UserID.split('=')
+                UserID = UserID[UserID.length - 1]
+                // console.log("LAST", UserID);
 
+                setRegisdterAdress(UserID);
+            } else {
+
+            }
+        } catch (e) {
+            console.log("Erroe Whille Referral Fuction Call", e);
+        }
+    }
+useEffect(()=>{
+    ReferralAddress();
+},[])
 
 
     return (
